@@ -1,0 +1,14 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Commandes{% endblock %}
+
+
+{% block pageTitle %}Commandes{% endblock pageTitle %}
+
+{% block pageBody %}
+
+    {% set headers = ['nom', 'prénom', 'email', 'contact', 'date',] %}
+    {% include 'admin/checkout/_table.html.twig' with {'headers': headers, 'data':checkouts} %}
+
+{% endblock pageBody %}
+

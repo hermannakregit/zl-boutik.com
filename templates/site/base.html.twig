@@ -1,0 +1,311 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<!-- Mirrored from bootstrap-ecommerce.com/templates/alistyle-html/page-index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 02 Dec 2022 13:33:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="max-age=604800" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>{% block title %}Bienvenue chez Z&L Boutik!{% endblock %}</title>
+
+    <link href="site/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- jQuery -->
+    <script src="{{ asset('site/js/jquery-2.0.0.min.js') }}" type="text/javascript"></script>
+
+    <!-- Bootstrap4 files-->
+    <script src="{{ asset('site/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
+    <link href="{{ asset('site/css/bootstrap3661.css') }}" rel="stylesheet" type="text/css"/>
+
+    <!-- Font awesome 5 -->
+    <link href="{{ asset('site/fonts/fontawesome/css/all.min3661.css') }}" type="text/css" rel="stylesheet">
+
+    <!-- custom style -->
+    <link href="{{ asset('site/css/owl.carousel.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('site/css/owl.theme.default.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('site/css/ui3661.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('site/css/responsive3661.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- custom javascript -->
+    <script src="{{ asset('site/js/script3661.js') }}" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+    <div id="product-list">
+        <header class="section-header">
+            <nav class="navbar d-none d-md-flex p-md-0 navbar-expand-sm navbar-light border-bottom">
+                <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTop4">
+                    <ul class="navbar-nav mr-auto">
+                        <li><!-- <span class="nav-link"><a href="{{ path('app_login') }}"> Connexion </a> </span> --></li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        {% if app.request.get('currency') == "eur" %}
+                            {% if app.user %}
+                                <li><a href="{{ path('app_logout') }}?currency=eur" class="nav-link text-white btn btn-primary  btn-sm mt-1"> Déconnexion </a></li>
+                            {% else %}
+                                <li><a href="{{ path('app_login') }}?currency=eur" class="nav-link text-white btn btn-primary  btn-sm mt-1"> Connexion </a></li>
+                            {% endif %}
+                        {% else %}
+                            {% if app.user %}
+                                <li><a href="{{ path('app_logout') }}" class="nav-link text-white btn btn-primary  btn-sm mt-1"> Déconnexion </a></li>
+                            {% else %}
+                                <li><a href="{{ path('app_login') }}" class="nav-link text-white btn btn-primary  btn-sm mt-1"> Connexion </a></li>
+                            {% endif %}
+                        {% endif %}
+                        
+                        
+    
+                        <li><a href="?currency=eur" class="nav-link text-dark"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-euro text-sm text-dark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M17.2 7a6 7 0 1 0 0 10"></path>
+                            <path d="M13 10h-8m0 4h8"></path>
+                         </svg> </a></li>
+    
+                        <li><a href="?" class="nav-link text-dark"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-frank text-dark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M17 5h-6a2 2 0 0 0 -2 2v12"></path>
+                            <path d="M7 15h4"></path>
+                            <path d="M9 11h7"></path>
+                         </svg> </a></li>
+                        
+                        {% if app.request.get('currency') == "eur" %}
+                            <li><a href="{{ path('app_site_panier_list') }}?currency=eur" class="nav-link text-dark"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart text-dark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <circle cx="6" cy="19" r="2"></circle>
+                                <circle cx="17" cy="19" r="2"></circle>
+                                <path d="M17 17h-11v-14h-2"></path>
+                                <path d="M6 5l14 1l-1 7h-13"></path>
+                            </svg> </a></li>
+                        {% else %}
+                            <li><a href="{{ path('app_site_panier_list') }}" class="nav-link text-dark"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart text-dark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <circle cx="6" cy="19" r="2"></circle>
+                                <circle cx="17" cy="19" r="2"></circle>
+                                <path d="M17 17h-11v-14h-2"></path>
+                                <path d="M6 5l14 1l-1 7h-13"></path>
+                            </svg> </a></li>
+                        {% endif %}
+                        
+                        
+                        
+                    </ul> <!-- list-inline //  -->
+                </div> <!-- navbar-collapse .// -->
+                </div> <!-- container //  -->
+            </nav>
+            
+            <div class="container">
+                <section class="header-main border-bottom">
+                <div class="row row-sm">
+                    <div class="col-6 col-sm col-md col-lg  flex-grow-0">
+                        {% if app.request.get('currency') == "eur" %}
+                            <a href="{{ path('app_site_index') }}?currency=eur" class="brand-wrap">
+                                <img class="logo mt-1" src="{{ asset('site/images/logo.png') }}">
+                            </a> <!-- brand-wrap.// -->
+                        {% else %}
+                            <a href="{{ path('app_site_index') }}" class="brand-wrap">
+                                <img class="logo mt-1" src="{{ asset('site/images/logo.png') }}">
+                            </a> <!-- brand-wrap.// -->
+                        {% endif %}
+                        
+                    </div>
+                    <div class="col-6 col-sm col-md col-lg flex-md-grow-0">
+                
+                        <!-- mobile-only -->
+                        <div class="d-md-none float-right">
+                            {% if app.request.get('currency') == "eur" %}
+                              <a href="{{ path('app_login') }}" class="btn btn-light text-dark"> <i class="fa fa-user text-dark"></i> </a>
+                            {% else %}
+                                <a href="{{ path('app_login') }}" class="btn btn-light text-dark"> <i class="fa fa-user text-dark"></i> </a>
+                            {% endif %}
+                            
+                            <a href="?currency=eur" class="btn btn-light"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-euro text-dark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M17.2 7a6 7 0 1 0 0 10"></path>
+                                <path d="M13 10h-8m0 4h8"></path>
+                             </svg>  </a>
+                             <a href="?" class="btn btn-light"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-currency-frank text-dark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M17 5h-6a2 2 0 0 0 -2 2v12"></path>
+                                <path d="M7 15h4"></path>
+                                <path d="M9 11h7"></path>
+                             </svg></a>
+    
+                             {% if app.request.get('currency') == "eur" %}
+                                <a href="{{ path('app_site_panier_list') }}?currency=eur" class="btn btn-light text-dark"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart text-dark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <circle cx="6" cy="19" r="2"></circle>
+                                    <circle cx="17" cy="19" r="2"></circle>
+                                    <path d="M17 17h-11v-14h-2"></path>
+                                    <path d="M6 5l14 1l-1 7h-13"></path>
+                                </svg> </a>
+                            {% else %}
+                                <a href="{{ path('app_site_panier_list') }}" class="btn btn-light text-dark"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart text-dark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <circle cx="6" cy="19" r="2"></circle>
+                                    <circle cx="17" cy="19" r="2"></circle>
+                                    <path d="M17 17h-11v-14h-2"></path>
+                                    <path d="M6 5l14 1l-1 7h-13"></path>
+                                </svg> </a>
+                            {% endif %}
+                        </div>
+                        <!-- mobile-only //end  -->
+                
+                        <!-- <div class="category-wrap d-none dropdown d-md-inline-block">
+                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown"> 
+                                Acheter pour
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#"> Tout </a>
+                                <a class="dropdown-item" href="#"> Homme </a>
+                                <a class="dropdown-item" href="#"> Femme </a>
+                                <a class="dropdown-item" href="#"> Mixte </a>
+                            </div>
+                        </div>  --> <!-- category-wrap.// -->
+                    </div> <!-- col.// -->
+                    <div class="col-lg-6 col-xl col-md-5 col-sm-12 flex-grow-1">
+                        <form action="#" class="search-header">
+                            <div class="input-group">
+                                <input type="text" class="form-control fuzzy-search" placeholder="Rechercher">
+                                <select class="custom-select border-left" id="category">
+                                        <option value="all">TOUT</option>
+                                        <option value="homme">HOMME</option>
+                                        <option value="femme">FEMME</option>
+                                        <option value="mixte">MIXTE</option>
+                                        {% if app.request.get('category') %}
+                                            <option value="mixte" selected > {{ app.request.get('category')|upper }} </option>
+                                        {% endif %}
+                                </select>
+                            </div>
+                        </form> <!-- search-wrap .end// -->
+                    </div> <!-- col.// -->
+                    <div class="col col-lg col-md flex-grow-0">
+                        <button class="btn btn-block btn-dark" type="submit"> Rechercher </button>
+                    </div>
+                    <!-- <div class="col col-lg col-md flex-grow-0">
+                        <button class="btn btn-block btn-light" type="submit"> Advanced </button>
+                    </div> -->
+                </div> <!-- row.// -->
+                </section> <!-- header-main .// -->   
+    
+                <nav class="navbar navbar-main navbar-expand pl-0">
+                    <ul class="navbar-nav flex-wrap">
+                        {% if app.request.get('currency') == "eur" %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_site_index') }}?currency=eur">Acceuil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_site_produit') }}?currency=eur">Produits</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_site_contact') }}?currency=eur">Contact</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_site_index') }}">Acceuil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_site_produit') }}">Produits</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_site_contact') }}">Contact</a>
+                            </li>
+                        {% endif %}
+                        
+                    </ul>
+                </nav> <!-- navbar-main  .// -->
+            
+            </div> <!-- container.// -->
+        </header> <!-- section-header.// -->
+    
+        {% block body %}{% endblock body %}
+    
+        <!-- ========================= FOOTER ========================= -->
+        <footer class="section-footer bg-dark text-white">
+            <div class="container">
+                <section class="footer-top  padding-y-lg">
+                    <div class="row">
+                        <aside class="col-md-4 col-12">
+                            <article class="mr-md-4">
+                                <h5 class="title">Nous contacter</h5>
+                                <p>Votre corps de rêve commence ici.</p>
+                                <ul class="list-icon">
+                                    <li> <i class="icon fa fa-map-marker"> </i>Côte d'Ivoire, Cocody-Angré-Château </li>
+                                    <li> <i class="icon fa fa-envelope"> </i> contact@zl-boutik.com</li>
+                                    <li> <i class="icon fa fa-phone"> </i> (+225) 07 070 732 77</li>
+                                    <li> <i class="icon fa fa-clock"> </i>Lun-Sam 08:00 - 18:00</li>
+                                </ul>
+                            </article>
+                        </aside>
+                        <aside class="col-md col-6">
+                            <article class="mr-md-4">
+                                <h5 class="title">Nous livrons partout</h5>
+                                <p>Vos produits où que vous soyez.</p>
+                                <ul class="list-icon">
+                                    <li> <i class="icon fa fa-map-marker"> </i>Côte d'Ivoire, (Abidjan et l'intérieur) </li>
+                                    <li> <i class="icon fa fa-map-marker"> </i>Sous région (CEDEAO et UEMOA) </li>
+                                    <li> <i class="icon fa fa-map-marker"> </i> À l’international (DHL) </li>
+                                </ul>
+                            </article>
+                        </aside>
+                        <!-- <aside class="col-md col-6"></aside> -->
+                        <aside class="col-md-4 col-12">
+                            <h5 class="title">Newsletter</h5>
+                            <p>Soyez le premier informé des nouveaux produits, des ventes flash et des promos!</p>
+                            
+                            <form class="form-inline mb-3">
+                                <input type="text" placeholder="Email" class="border-0 w-auto form-control text-dark" name="">
+                                <button class="btn ml-2 btn-warning"> S'abonner</button>
+                            </form>
+    
+                            <p class="text-white-50 mb-2">Suivez-nous</p>
+                            <div>
+                                <a href="https://web.facebook.com/ZlBoutikCI" target="_blank" class="btn btn-icon btn-outline-light"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com/zl_boutik/" target="_blank" class="btn btn-icon btn-outline-light"><i class="fab fa-instagram"></i></a>
+                            </div>
+    
+                        </aside>
+                    </div> <!-- row.// -->
+                </section>	<!-- footer-top.// -->
+    
+                <section class="footer-bottom text-center">
+                    <!-- <p class="text-white">Politique de confidentialité  - User Information Legal Enquiry Guide</p> -->
+                    <p class="text-muted"> &copy <script> document.write(new Date().getFullYear()); </script> Z&L Boutik, Tout droit reservé. </p>
+                    <br>
+            </section>
+            </div><!-- //container -->
+        </footer>
+    </div>
+<!-- ========================= FOOTER END // ========================= -->
+
+    <script src="{{ asset('assets/dist/libs/list.js/dist/list.min.js') }}"></script>
+    <script src="{{ asset('site/js/owl.carousel.min.js') }}"></script>
+
+    <script>
+        document.getElementById('category').addEventListener('change', (e) => {
+            let category = e.target.value
+            let currency = "{{ app.request.get('currency') }}"
+            let url = "{{ path('app_site_produit') }}"
+            let uri = url + '/' + category
+            if(currency == 'eur'){
+                uri = uri + '?currency=' + currency
+            }
+
+            window.location.replace(uri);
+            
+        });
+    </script>
+
+    {% block scripts %}{% endblock scripts %}
+
+</body>
+
+</html>

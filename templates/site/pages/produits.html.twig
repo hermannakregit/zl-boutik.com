@@ -1,0 +1,59 @@
+{% extends "site/base.html.twig" %}
+
+{% block title %}Z&L Boutik | Produits{% endblock %}
+
+{% block body %}
+
+<section>
+    <div class="row">
+        <div class="w-100 mx-auto mt-3">
+            {% for message in app.flashes('success')  %}
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <div class="d-flex justify-content-center">
+                        <div>
+                            <!-- Download SVG icon from http://tabler-icons.io/i/check -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                        </div>
+                        <div>
+                            <h4 class="alert-title">Félicitation !</h4>
+                            <div class="text-muted">{{ message }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Shop Section Begin -->
+<section class="shop spad">
+    <div class="container mb-5 mt-4" id="product-list">
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <form action="#">
+                    <input type="text" class="fuzzy-search form-control" placeholder="Taper pour rechercher...">
+                </form>
+            </div>
+        </div>
+
+        <div class="row list">
+
+            {% for p in products  %}
+
+                {% include "site/partials/produitItem.html.twig" with {p: p} %}
+
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+<!-- Shop Section End -->
+{% endblock body %}
+
+{% block scripts %}
+    <script>
+        const productList = new List('product-list', { 
+            valueNames: ['product_name']
+        });
+    </script>
+{% endblock scripts %}

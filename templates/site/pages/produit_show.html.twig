@@ -1,0 +1,133 @@
+{% extends "site/base.html.twig" %}
+
+{% block title %}Z&L Boutik | {{ product.name }} {% endblock %}
+
+{% block body %}
+    
+    <!-- ========================= SECTION CONTENT ========================= -->
+    <section class="section-content bg-white padding-y">
+        <div class="container">
+
+            <div class="alert alert-info">
+                <p class="icontext"><i class="icon text-info fa fa-truck"></i> Livré en quelques heures seulement.</p>
+            </div>
+
+        <!-- ============================ ITEM DETAIL ======================== -->
+            <div class="row">
+                
+                <aside class="col-md-6">
+                    <div class="card">
+                        <article class="gallery-wrap"> 
+                            <div class="img-big-wrap">
+                            <div> <a href="#"><img src="{{ vich_uploader_asset(product, 'imageFile') }}" class="img-fluid img-responsive"></a></div>
+                            </div> <!-- slider-product.// -->
+                            <div class="thumbs-wrap">
+                            <a href="#" class="item-thumb"> <img src="{{ vich_uploader_asset(product, 'imageFile') }}"></a>
+                            <a href="#" class="item-thumb"> <img src="{{ vich_uploader_asset(product, 'imageFile') }}"></a>
+                            <a href="#" class="item-thumb"> <img src="{{ vich_uploader_asset(product, 'imageFile') }}"></a>
+                            <a href="#" class="item-thumb"> <img src="{{ vich_uploader_asset(product, 'imageFile') }}"></a>
+                            </div> <!-- slider-nav.// -->
+                        </article> <!-- gallery-wrap .end// -->
+                    </div> <!-- card.// -->
+                </aside>
+                <main class="col-md-6">
+                    <article class="product-info-aside">
+
+                        <h2 class="title mt-3"> {{ product.name }} </h2>
+
+                        <div class="rating-wrap my-3">
+                            <ul class="rating-stars">
+                                <li style="width:80%" class="stars-active"> 
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                                    <i class="fa fa-star"></i> 
+                                </li>
+                                <li>
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                                    <i class="fa fa-star"></i> 
+                                </li>
+                            </ul>
+                            <!-- <small class="label-rating text-muted">132 reviews</small>
+                            <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 orders </small> -->
+                        </div> <!-- rating-wrap.// -->
+
+                        <div class="mb-3"> 
+
+                            {% if app.request.get('currency') == "eur" %}
+                                {% if product.reduction %}
+                                    {% set price = product.priceEur - ((product.priceEur * product.reduction ) / 100) %}
+                                    <var class="price h4">{{ price }} EUR</var> 
+                                    <del class="price-old h4 ml-3">{{ product.priceEur }} EUR</del>
+                                {% else %}
+                                    <var class="price h4">{{ product.priceEur }} EUR</var> 
+                                {% endif %}
+                            {% else %}
+                            {% if product.reduction %}
+                                {% set price = product.priceXof - ((product.priceXof * product.reduction ) / 100) %}
+                                    <var class="price h4">{{ price }} XOF</var> 
+                                    <del class="price-old h4 ml-3">{{ product.priceXof }} XOF</del>
+                                {% else %}
+                                    <var class="price h4">{{ product.priceXof }} XOF</var> 
+                                {% endif %}
+                            {% endif %}
+                            
+
+                            
+                            
+                        </div> <!-- price-detail-wrap .// -->
+
+                        <h5 class="title-description">Description</h5>
+                        <p>
+                            {{ product.description }} 
+                        </p>
+
+                        <ul class="list-check">
+                            <li>Qualité garantie</li>
+                            <li>Sans effet sécondaire</li>
+                            <li>Utilisation simple et facile</li>
+                            <li>Résultat optimal</li>
+                            <li>Votre corps, comme vous le souhaité</li>
+                        </ul>
+
+                        <div class="form-row  mt-4"><!-- col.// -->
+                            <div class="form-group col-md d-flex">
+                                {% if app.request.get('currency') == "eur" %}
+                                    <form action="{{ path('app_site_panier_add', {id: product.id}) }}?currency=eur" method="post" id="form_{{ product.id }}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token('add_to_cart_' ~ product.id) }}">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-shopping-cart mr-2"></i> Ajouter au panier
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form action="{{ path('app_site_panier_add', {id: product.id}) }}" method="post" id="form_{{ product.id }}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token('add_to_cart_' ~ product.id) }}">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-shopping-cart mr-2"></i> Ajouter au panier
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                
+                                <a href="{{ path('app_site_contact') }}" class="btn btn-light ml-3">
+                                    <i class="fas fa-envelope"></i> <span class="text">Nous Contacter</span> 
+                                </a>
+                            </div> <!-- col.// -->
+                        </div> <!-- row.// -->
+
+                    </article> <!-- product-info-aside .// -->
+                </main> <!-- col.// -->
+            </div> <!-- row.// -->
+
+        <!-- ================ ITEM DETAIL END .// ================= -->
+
+        <div class="alert alert-success mt-3">
+            <p class="icontext"><i class="icon text-success fa fa-truck"></i> Livré en quelques heures seulement.</p>
+        </div>
+
+        </div> <!-- container .//  -->
+
+    </section>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+    
+
+{% endblock body %}

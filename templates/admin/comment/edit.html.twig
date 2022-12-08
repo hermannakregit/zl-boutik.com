@@ -1,0 +1,52 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Commentaire{% endblock %}
+
+
+{% block pageTitle %}Commentaire{% endblock pageTitle %}
+
+{% block pageBody %}
+
+    <div class="row">
+        <div class="col-md-8 col-xl-8 mx-auto">
+            <div class="card">
+                {{ form_start(comment_form) }}
+                <div class="card-header">
+                <h5 class="card-title">Modifier lze commentaire</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Client</label>
+                        {% if form_errors(comment_form.writer) %}
+                            {{ form_widget(comment_form.writer, {'attr': {'class': 'form-control is-invalid'}}) }}
+                            <span class="invalid-feedback">{{ form_errors(comment_form.writer) }}</span>
+                        {% else %}
+                            {{ form_widget(comment_form.writer, {'attr': {'class': 'form-control'}}) }}
+                        {% endif %}
+                        
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Commentaire</label>
+                        {% if form_errors(comment_form.comment) %}
+                            {{ form_widget(comment_form.comment, {'attr': {'class': 'form-control is-invalid'}}) }}
+                            <span class="invalid-feedback">{{ form_errors(comment_form.comment) }}</span>
+                        {% else %}
+                            {{ form_widget(comment_form.comment, {'attr': {'class': 'form-control'}}) }}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="card-footer">
+                        <button type="submit" formnovalidate class="btn btn-primary ms-auto float-end mb-3">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                            Modifier le commentaire
+                        </button>
+                    </div>
+                </div>
+            {{ form_end(comment_form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock pageBody %}
+

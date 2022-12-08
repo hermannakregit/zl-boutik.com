@@ -1,0 +1,150 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Produits{% endblock %}
+
+
+{% block pageTitle %}Produits{% endblock pageTitle %}
+
+{% block pageActions %}
+    <div class="btn-list">
+        <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-categorie">
+        <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+        Nouveau produit
+        </a>
+        <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-categorie" aria-label="Create new report">
+        <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+        </a>
+    </div>
+
+{% endblock pageActions %}
+
+{% block pageBody %}
+
+    {% set headers = ['image', 'nom', 'categorie', 'slug', 'date', 'active'] %}
+    {% include 'admin/product/_table.html.twig' with {'headers': headers, 'data':products} %}
+
+{% endblock pageBody %}
+
+
+{% block modals %}
+    <div class="modal modal-blur fade" id="modal-categorie" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            {{ form_start(product_form) }}
+            <div class="modal-header">
+            <h5 class="modal-title">Nouvelle catégorie</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Nom</label>
+                    {% if form_errors(product_form.name) %}
+                        {{ form_widget(product_form.name, {'attr': {'class': 'form-control is-invalid'}}) }}
+                        <span class="invalid-feedback">{{ form_errors(product_form.name) }}</span>
+                    {% else %}
+                        {{ form_widget(product_form.name, {'attr': {'class': 'form-control'}}) }}
+                    {% endif %}
+                    
+                </div>
+                <div class="row mb-3">
+                    <label class="form-label">Prix</label>
+                    <div class="col-lg-6">
+                        <div class="input-group input-group-flat">
+                            {% if form_errors(product_form.priceXof) %}
+                                <span class="input-group-text border border-danger"> XOF </span>
+                                {{ form_widget(product_form.priceXof, {'attr': {'class': 'form-control ps-1 is-invalid'}}) }}
+                                <span class="invalid-feedback">{{ form_errors(product_form.priceXof) }}</span>
+                            {% else %}
+                                <span class="input-group-text"> XOF </span>
+                                {{ form_widget(product_form.priceXof, {'attr': {'class': 'form-control ps-1'}}) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="input-group input-group-flat">
+                            {% if form_errors(product_form.priceEur) %}
+                                <span class="input-group-text border border-danger"> EUR </span>
+                                {{ form_widget(product_form.priceEur, {'attr': {'class': 'form-control ps-1 is-invalid'}}) }}
+                                <span class="invalid-feedback">{{ form_errors(product_form.priceEur) }}</span>
+                            {% else %}
+                                <span class="input-group-text"> EUR </span>
+                                {{ form_widget(product_form.priceEur, {'attr': {'class': 'form-control ps-1'}}) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Réduction</label>
+                    <div class="input-group input-group-flat">
+                        {% if form_errors(product_form.reduction) %}
+                            <span class="input-group-text border border-danger"> % </span>
+                            {{ form_widget(product_form.reduction, {'attr': {'class': 'form-control ps-1 is-invalid'}}) }}
+                            <span class="invalid-feedback">{{ form_errors(product_form.reduction) }}</span>
+                        {% else %}
+                            <span class="input-group-text"> % </span>
+                            {{ form_widget(product_form.reduction, {'attr': {'class': 'form-control ps-1'}}) }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Image</label>
+                    {% if form_errors(product_form.imageFile) %}
+                        {{ form_widget(product_form.imageFile, {'attr': {'class': 'form-control is-invalid'}}) }}
+                        <span class="invalid-feedback">{{ form_errors(product_form.imageFile) }}</span>
+                    {% else %}
+                        {{ form_widget(product_form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Slug</label>
+                    {% if form_errors(product_form.slug) %}
+                        {{ form_widget(product_form.slug, {'attr': {'class': 'form-control is-invalid'}}) }}
+                        <span class="invalid-feedback">{{ form_errors(product_form.slug) }}</span>
+                    {% else %}
+                        {{ form_widget(product_form.slug, {'attr': {'class': 'form-control'}}) }}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Catégorie</label>
+                    {% if form_errors(product_form.category) %}
+                        {{ form_widget(product_form.category, {'attr': {'class': 'form-control form-select is-invalid'}}) }}
+                        <span class="invalid-feedback">{{ form_errors(product_form.category) }}</span>
+                    {% else %}
+                        {{ form_widget(product_form.category, {'attr': {'class': 'form-control form-select'}}) }}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    {% if form_errors(product_form.description) %}
+                        {{ form_widget(product_form.description, {'attr': {'class': 'form-control is-invalid', 'id': 'tinymce-product-textarea'}}) }}
+                        <span class="invalid-feedback">{{ form_errors(product_form.description) }}</span>
+                    {% else %}
+                        {{ form_widget(product_form.description, {'attr': {'class': 'form-control', 'id': 'tinymce-product-textarea'}}) }}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <div class="form-label">Rendre le produit disponible</div>
+                    <label class="form-check form-switch">
+                        {{ form_widget(product_form.active, {'attr': {'class': 'form-check-input', 'checked': 'true'}}) }}
+                        <span class="form-check-label">Active</span>
+                    </label>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-bs-dismiss="modal">
+                        Annuler
+                    </a>
+                    <button type="submit" formnovalidate class="btn btn-primary ms-auto">
+                        <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                        Ajouter le produit
+                    </button>
+                </div>
+            </div>
+        {{ form_end(product_form) }}
+        </div>
+    </div>
+{% endblock modals %}
+

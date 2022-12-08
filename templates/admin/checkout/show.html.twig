@@ -1,0 +1,85 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Commandes{% endblock %}
+
+
+{% block pageTitle %}Commandes détails{% endblock pageTitle %}
+
+{% block pageActions %}
+    <div class="col-12 col-md-auto ms-auto d-print-none">
+        <button type="button" class="btn btn-primary" onclick="javascript:window.print();">
+        <!-- Download SVG icon from http://tabler-icons.io/i/printer -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><rect x="7" y="13" width="10" height="8" rx="2" /></svg>
+        Print Invoice
+        </button>
+    </div>
+{% endblock pageActions %}
+
+{% block pageBody %}
+
+    <div class="card card-lg">
+        <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+            <p class="h3">Z&L Boutik</p>
+            <address>
+                Cocody-Angré-Château.<br>
+                Abidjan Côte d'Ivoire<br>
+                +225 07 070 732 77 <br>
+                contact@zl-boutik.com
+            </address>
+            </div>
+            <div class="col-6 text-end">
+            <p class="h3">Client(e)</p>
+            <address>
+                {{ checkout.firstName|upper }} {{ checkout.lastName|upper }}<br>
+                {{ checkout.pays|lower }}, {{ checkout.ville|lower }}, {{ checkout.ville|lower }}<br>
+                {{ checkout.email|lower }}<br>
+                (+225) {{ checkout.contact|lower }}
+            </address>
+            </div>
+                <div class="col-12 my-5">
+                <h1>Commande INV/00{{checkout.id }}/23</h1>
+                <div class="alert">
+                    Date: {{ checkout.getCreatedAt }} <br>
+                    Livré à :  {{ checkout.adresseLivraison|lower }}
+                </div>
+            </div>
+        </div>
+        <table class="table table-transparent table-responsive">
+            <thead>
+            <tr>
+                <th class="text-center" style="width: 1%"></th>
+                <th>Produits</th>
+                <th class="text-center" style="width: 1%">Qnt</th>
+                <th class="text-end" style="width: 1%">Unit. (XOF)</th>
+                <th class="text-end" style="width: 1%">Montant (XOF)</th>
+            </tr>
+            </thead>
+            {% for data in dataPanier  %}
+                <tr>
+                    <td class="text-center">{{ loop.index }}</td>
+                    <td>
+                        <p class="strong mb-1">{{ data.product.name }}</p>
+                        <div class="text-muted">{{ data.product.description[0:100] }}...</div>
+                    </td>
+                    <td class="text-center">
+                        {{ data.quantity }}
+                    </td>
+                    
+                    <td class="text-end">{{data.product.priceXof}}</td>
+                    {% set total = data.product.priceXof * data.quantity %}
+                    <td class="text-end">{{total}}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4" class="font-weight-bold text-uppercase text-end">Total</td>
+                <td class="font-weight-bold text-end">XOF {{ totalXof }}</td>
+            </tr>
+        </table>
+        <p class="text-muted text-center mt-5">Merci beaucoup pour votre commande. Nous sommes impatients de vous revoir chez nous!</p>
+        </div>
+    </div>
+
+{% endblock pageBody %}
+

@@ -1,0 +1,99 @@
+{% if app.request.get('currency') == "eur" %}
+    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+        <div class="card card-sm card-product-grid">
+            <a href="{{ path('app_site_produit_show', {slug: p.slug}) }}?currency=eur" class="img-wrap">
+                {% if p.reduction %}
+                    <b class="badge badge-danger mr-1">-{{ p.reduction }}%</b>
+                {% endif %}
+                <img src="{{ vich_uploader_asset(p, 'imageFile') }}" class="w-100" style="object-fit: cover;">
+            </a>
+            <figcaption class="info-wrap">
+                <a href="{{ path('app_site_produit_show', {slug: p.slug}) }}?currency=eur" class="title"><small class="product_name">{{ p.name|upper }}</small></a>
+                <p> <small> {{ p.description|lower[0:25] }} ... </small> </p>
+                {% if app.request.get('currency') == "eur" and p.priceEur %}
+                    {% if p.reduction %}
+                        <div class="price-wrap">
+                            {% set price = p.priceEur - ((p.priceEur * p.reduction ) / 100) %}
+                            <span class="price"><small>{{ price }} EUR</small></span>
+                            <del class="price-old float-right"><small>{{ p.priceEur }} EUR</small></del>
+                        </div> 
+                    {% else %}
+                        <div class="price-wrap">
+                            <span class="price"><small>{{ p.priceEur }} EUR</small></span>
+                        </div> 
+                    {% endif %}
+                {% else %}
+                    {% if p.reduction %}
+                        <div class="price-wrap">
+                            {% set price = p.priceXof - ((p.priceXof * p.reduction ) / 100) %}
+                            <span class="price"><small>{{ price }} XOF</small></span>
+                            <del class="price-old float-right"><small>{{ p.priceXof }} XOF</small></del>
+                        </div> 
+                    {% else %}
+                        <div class="price-wrap">
+                            <span class="price"><small>{{ p.priceXof }} XOF</small></span>
+                        </div> 
+                    {% endif %}
+                {% endif %}
+                <!-- price-wrap.// -->
+            </figcaption>
+            <div class="pb-2 px-2 mt-n2">
+                <form action="{{ path('app_site_panier_add', {id: p.id}) }}?currency=eur" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token('add_to_cart_' ~ p.id) }}">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <small><i class="fa fa-shopping-cart mr-2"></i> Ajouter au panier</small>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+        <div class="card card-sm card-product-grid">
+            <a href="{{ path('app_site_produit_show', {slug: p.slug}) }}" class="img-wrap">
+                {% if p.reduction %}
+                    <b class="badge badge-danger mr-1">-{{ p.reduction }}%</b>
+                {% endif %}
+                <img src="{{ vich_uploader_asset(p, 'imageFile') }}" class="w-100" style="object-fit: cover;">
+            </a>
+            <figcaption class="info-wrap">
+                <a href="{{ path('app_site_produit_show', {slug: p.slug}) }}" class="title"><small class="product_name">{{ p.name|upper }}</small></a>
+                <p> <small> {{ p.description|lower[0:25] }} ... </small> </p>
+                {% if app.request.get('currency') == "eur" and p.priceEur %}
+                    {% if p.reduction %}
+                        <div class="price-wrap">
+                            {% set price = p.priceEur - ((p.priceEur * p.reduction ) / 100) %}
+                            <span class="price"><small>{{ price }} EUR</small></span>
+                            <del class="price-old float-right"><small>{{ p.priceEur }} EUR</small></del>
+                        </div> 
+                    {% else %}
+                        <div class="price-wrap">
+                            <span class="price"><small>{{ p.priceEur }} EUR</small></span>
+                        </div> 
+                    {% endif %}
+                {% else %}
+                    {% if p.reduction %}
+                        <div class="price-wrap">
+                            {% set price = p.priceXof - ((p.priceXof * p.reduction ) / 100) %}
+                            <span class="price"><small>{{ price }} XOF</small></span>
+                            <del class="price-old float-right"><small>{{ p.priceXof }} XOF</small></del>
+                        </div> 
+                    {% else %}
+                        <div class="price-wrap">
+                            <span class="price"><small>{{ p.priceXof }} XOF</small></span>
+                        </div> 
+                    {% endif %}
+                {% endif %}
+                <!-- price-wrap.// -->
+            </figcaption>
+            <div class="pb-2 px-2 mt-n2">
+                <form action="{{ path('app_site_panier_add', {id: p.id}) }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token('add_to_cart_' ~ p.id) }}">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <small><i class="fa fa-shopping-cart mr-2"></i> Ajouter au panier</small>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}

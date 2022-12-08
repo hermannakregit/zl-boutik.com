@@ -1,0 +1,58 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Category{% endblock %}
+
+
+{% block pageTitle %}Categories{% endblock pageTitle %}
+
+{% block pageBody %}
+
+    <div class="row">
+        <div class="col-md-8 col-xl-8 mx-auto">
+            <div class="card">
+                {{ form_start(category_form) }}
+                <div class="card-header">
+                <h5 class="card-title">Modifier la catégorie</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nom</label>
+                        {% if form_errors(category_form.name) %}
+                            {{ form_widget(category_form.name, {'attr': {'class': 'form-control is-invalid'}}) }}
+                            <span class="invalid-feedback">{{ form_errors(category_form.name) }}</span>
+                        {% else %}
+                            {{ form_widget(category_form.name, {'attr': {'class': 'form-control'}}) }}
+                        {% endif %}
+                        
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Slug</label>
+                        {% if form_errors(category_form.slug) %}
+                            {{ form_widget(category_form.slug, {'attr': {'class': 'form-control is-invalid'}}) }}
+                            <span class="invalid-feedback">{{ form_errors(category_form.slug) }}</span>
+                        {% else %}
+                            {{ form_widget(category_form.slug, {'attr': {'class': 'form-control'}}) }}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">Rendre la catégorie disponible</div>
+                        <label class="form-check form-switch">
+                            {{ form_widget(category_form.active, {'attr': {'class': 'form-check-input', 'checked': 'true'}}) }}
+                            <span class="form-check-label">Active</span>
+                        </label>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" formnovalidate class="btn btn-primary ms-auto float-end mb-3">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                            Modifier la catégorie
+                        </button>
+                    </div>
+                </div>
+            {{ form_end(category_form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock pageBody %}
+

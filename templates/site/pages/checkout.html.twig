@@ -1,0 +1,245 @@
+{% extends "site/base.html.twig" %}
+
+{% block title %}Z&L Boutik | Panier{% endblock %}
+
+{% block body %}
+
+<section>
+    <div class="row">
+        <div class="w-100 mx-auto mt-3">
+            {% for message in app.flashes('warning')  %}
+                <div class="alert alert-warning" role="alert">
+                    <div class="d-flex justify-content-center">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/check -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon mt-1 mr-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v2m0 4v.01" /><path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" /></svg>
+                        <div>
+                            <h4 class="alert-title">Attention !</h4>
+                            <div class="text-muted">{{ message }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="">
+    <div class="container">
+        <div class="my-2">
+            {{ form_start(form, {attr: { id: 'form-checkout' }}) }}
+                <div class="row">
+
+                    <div class="col-lg-8 col-md-6 mb-5">
+                        <div class="alert alert-success mt-3">
+                            <p class="icontext"><i class="icon text-success fa fa-user"></i> Si vous n'avez pas de compte, un compte vous sera créé automatiquement.</p>
+                        </div>
+                        <h6 class="">Informations de livraison</h6>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <p>Nom<span>*</span></p>
+                                    {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                                    <small> {{ form_errors(form.firstName) }} </small>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <p>Prénom<span>*</span></p>
+                                    {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                                    <small> {{ form_errors(form.lastName) }} </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div cclass="form-group">
+                            <p>Code Postal<span>*</span></p>
+                            {{ form_widget(form.codePostal, {'attr': {'class': 'form-control'}}) }}
+                            <small> {{ form_errors(form.codePostal) }} </small>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <p>Contact<span>*</span></p>
+                                    {{ form_widget(form.contact, {'attr': {'class': 'form-control'}}) }}
+                                    <small> {{ form_errors(form.contact) }} </small>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <p>Email<span>*</span></p>
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                    <small> {{ form_errors(form.email) }} </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p>Pays<span>*</span></p>
+                            {{ form_widget(form.pays, {'attr': {'class': 'form-control'}}) }}
+                                    <small> {{ form_errors(form.pays) }} </small>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <p>Ville<span>*</span></p>
+                                    {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+                                    <small> {{ form_errors(form.ville) }} </small>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <p>Commune<span>*</span></p>
+                                    {{ form_widget(form.commune, {'attr': {'class': 'form-control'}}) }}
+                                    <small> {{ form_errors(form.commune) }} </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p>Adresse de livraison<span>*</span></p>
+                            {{ form_widget(form.adresseLivraison, {'attr': {'class': 'form-control'}}) }}
+                            <small> {{ form_errors(form.adresseLivraison) }} </small>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <article class="mr-md-4">
+                                <h5 class="title">Nous livrons partout</h5>
+                                <p>Vos produits où que vous soyez.</p>
+                                <ul class="list-icon">
+                                    <li> <i class="icon fa fa-map-marker"> </i>Côte d'Ivoire, (Abidjan et l'intérieur) </li>
+                                    <li> <i class="icon fa fa-map-marker"> </i>Sous région (CEDEAO et UEMOA) </li>
+                                    <li> <i class="icon fa fa-map-marker"> </i> À l’international (DHL) </li>
+                                </ul>
+                            </article>
+                        </div>
+
+                        {% if not app.user %}
+                            <div class="form-group">
+                                <label for="acc">
+                                    <input type="checkbox" name="create_acount" id="acc">
+                                    Créer un compte?
+                                    <span class="checkmark"></span>
+                                </label>
+                                <p>
+                                    Créez un compte en entrant les informations ci-dessous. Si vous êtes un client récurrent
+                                    Veuillez vous connecter en haut de la page.
+                                </p>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Mot de passe du compte<span>*</span></p>
+                                <input class="form-control" type="text" name="acount_password">
+                            </div>
+                        {% endif %}
+                        
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="checkout__order">
+                            <div class="alert alert-info mt-3">
+                                <p class="icontext"><i class="icon text-primary fa fa-shopping-cart"></i> Votre commande.</p>
+                            </div>
+                            <div class="checkout__order__products ml-4">Produits <span>Total</span></div>
+                            <ul class="checkout__total__products">
+                                {% for data in dataPanier  %}
+                                    {% if app.request.get('currency') == "eur" %}
+                                        {% set totalProduct = data.product.priceEur * data.quantity %}
+                                        <li class="mt-2"> 
+                                            <span class="badge bg-light p-2">x{{ data.quantity }}</span> . 
+                                            {{ data.product.name }} 
+                                        <span class="float-right mr-3">{{ totalProduct }} Eur</span>
+                                    {% else %}
+                                        {% set totalProduct = data.product.priceXof * data.quantity %}
+                                        <li class="mt-2"> 
+                                            <span class="badge bg-light p-2">x{{ data.quantity }}</span> . 
+                                            {{ data.product.name }} 
+                                        <span class="float-right mr-3">{{ totalProduct }} XOF</span>
+                                    {% endif %}
+                                    
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <hr class="w-75">
+                            <ul class="checkout__total__all">
+                                {% if app.request.get('currency') == "eur" %}
+                                    <li>Réduction <span class="float-right mr-3"> <strong>{{ totalReduction }} EUR</strong> </span></li>
+                                {% else %}
+                                    <li>Réduction <span class="float-right mr-3"> <strong>{{ totalReduction }} XOF</strong> </span></li>
+                                {% endif %}
+                                
+                                
+                            </ul>
+                            <ul class="checkout__total__all">
+                                {% if app.request.get('currency') == "eur" %}
+                                    {% set totalEur = totalEur - totalReduction %}
+                                    <li>Total <span class="float-right mr-3"> <strong>{{ totalEur }} EUR</strong> </span></li>
+                                {% else %}
+                                    {% set total = totalXof - totalReduction %}
+                                    <li>Total <span class="float-right mr-3"> <strong>{{ total }} XOF</strong> </span></li>
+                                {% endif %}
+                                
+                            </ul>
+
+                            <p class="ml-4 mt-4"> <i class="icon text-success fa fa-truck"></i> Frais de livraison</p>
+                            {% if app.request.get('currency') == "eur" %}
+                                <ul class="list-icon">
+                                    <li> </i>Côte d'Ivoire  <span class="float-right mr-3">2.50 - 3.80 EUR</span> </li>
+                                    <li> Sous région <span class="float-right mr-3">11 - 15.50 EUR</span></li>
+                                    <li> International <span class="float-right mr-3">35 - 46 EUR</span></li>
+                                </ul>
+                            {% else %}
+                                <ul class="list-icon">
+                                    <li> </i>Côte d'Ivoire  <span class="float-right mr-3">1500 - 2500 XOF</span> </li>
+                                    <li> Sous région <span class="float-right mr-3">7000 - 10000 XOF</span></li>
+                                    <li> International <span class="float-right mr-3">20000 - 30000 XOF</span></li>
+                                </ul>
+                            {% endif %}
+                            
+                            <p class="text-center mt-4">
+                                <small> <strong>Les frais de livraison sont exclu du montant total de votre commande. </strong> </small>
+                            </p>
+                            
+                            
+                            {% if not app.user %}
+                                <div class="checkout__input__checkbox mt-5 ml-4">
+                                    <label for="acc-or">
+                                        <input type="checkbox" name="create_acount" id="acc-or">
+                                        Créer un compte
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <p class="ml-4">
+                                    Créez un compte en entrant les informations ci-dessous. Si vous êtes un client récurrent Veuillez vous connecter en haut de la page.
+                                </p>
+                            {% endif %}
+
+                            <button type="submit" class="btn btn-primary mt-2 w-100" id="btn-send" style="display: block;">Valider ma commande</button>
+
+                            <div class="site-btn text-center" id="btn-load" style="display: none;">Veuillez patienter...</div>
+
+                        </div>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+        <div class="alert alert-success">
+            <p class="icontext"><i class="icon text-success fa fa-truck"></i> Livré en quelques heures seulement.</p>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}
+
+{% block scripts %}
+    <script>
+
+        const form = document.getElementById('form-checkout');
+        const btn = document.getElementById('btn-send');
+        const btn_load = document.getElementById('btn-load');
+
+        form.addEventListener("submit", () => {
+
+            btn.style.display = 'none';
+            btn_load.style.display = 'block';
+
+        });
+
+    </script>
+{% endblock scripts %}

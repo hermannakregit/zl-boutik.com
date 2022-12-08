@@ -1,0 +1,130 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Produits{% endblock %}
+
+
+{% block pageTitle %}Produits{% endblock pageTitle %}
+
+{% block pageBody %}
+
+    <div class="row">
+        <div class="col-md-8 col-xl-8 mx-auto">
+            <div class="card">
+                {{ form_start(product_form) }}
+                <div class="card-header">
+                <h5 class="card-title">Modifier le produit</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nom</label>
+                        {% if form_errors(product_form.name) %}
+                            {{ form_widget(product_form.name, {'attr': {'class': 'form-control is-invalid'}}) }}
+                            <span class="invalid-feedback">{{ form_errors(product_form.name) }}</span>
+                        {% else %}
+                            {{ form_widget(product_form.name, {'attr': {'class': 'form-control'}}) }}
+                        {% endif %}
+                        
+                    </div>
+                    <div class="row mb-3">
+                        <label class="form-label">Prix</label>
+                        <div class="col-lg-6">
+                            <div class="input-group input-group-flat">
+                                {% if form_errors(product_form.priceXof) %}
+                                    <span class="input-group-text border border-danger"> XOF </span>
+                                    {{ form_widget(product_form.priceXof, {'attr': {'class': 'form-control ps-1 is-invalid'}}) }}
+                                    <span class="invalid-feedback">{{ form_errors(product_form.priceXof) }}</span>
+                                {% else %}
+                                    <span class="input-group-text"> XOF </span>
+                                    {{ form_widget(product_form.priceXof, {'attr': {'class': 'form-control ps-1'}}) }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="input-group input-group-flat">
+                                {% if form_errors(product_form.priceEur) %}
+                                    <span class="input-group-text border border-danger"> EUR </span>
+                                    {{ form_widget(product_form.priceEur, {'attr': {'class': 'form-control ps-1 is-invalid'}}) }}
+                                    <span class="invalid-feedback">{{ form_errors(product_form.priceEur) }}</span>
+                                {% else %}
+                                    <span class="input-group-text"> EUR </span>
+                                    {{ form_widget(product_form.priceEur, {'attr': {'class': 'form-control ps-1'}}) }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Réduction</label>
+                        <div class="input-group input-group-flat">
+                            {% if form_errors(product_form.reduction) %}
+                                <span class="input-group-text border border-danger"> % </span>
+                                {{ form_widget(product_form.reduction, {'attr': {'class': 'form-control ps-1 is-invalid'}}) }}
+                                <span class="invalid-feedback">{{ form_errors(product_form.reduction) }}</span>
+                            {% else %}
+                                <span class="input-group-text"> % </span>
+                                {{ form_widget(product_form.reduction, {'attr': {'class': 'form-control ps-1'}}) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Image</label>
+                        {% if form_errors(product_form.imageFile) %}
+                            <div class="text-center">
+                                {{ form_widget(product_form.imageFile, {'attr': {'class': 'form-control mb-3 is-invalid'}}) }}
+                            </div>
+                            
+                        {% else %}
+                            <div class="text-center">
+                                {{ form_widget(product_form.imageFile, {'attr': {'class': 'form-control mb-3'}}) }}
+                            </div>
+                        {% endif %}
+                        
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Slug</label>
+                        {% if form_errors(product_form.slug) %}
+                            {{ form_widget(product_form.slug, {'attr': {'class': 'form-control is-invalid'}}) }}
+                            <span class="invalid-feedback">{{ form_errors(product_form.slug) }}</span>
+                        {% else %}
+                            {{ form_widget(product_form.slug, {'attr': {'class': 'form-control'}}) }}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Catégorie</label>
+                        {% if form_errors(product_form.category) %}
+                            {{ form_widget(product_form.category, {'attr': {'class': 'form-control form-select is-invalid'}}) }}
+                            <span class="invalid-feedback">{{ form_errors(product_form.category) }}</span>
+                        {% else %}
+                            {{ form_widget(product_form.category, {'attr': {'class': 'form-control form-select'}}) }}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        {% if form_errors(product_form.description) %}
+                            {{ form_widget(product_form.description, {'attr': {'class': 'form-control is-invalid', 'id': 'tinymce-product-textarea'}}) }}
+                            <span class="invalid-feedback">{{ form_errors(product_form.description) }}</span>
+                        {% else %}
+                            {{ form_widget(product_form.description, {'attr': {'class': 'form-control', 'id': 'tinymce-product-textarea'}}) }}
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">Rendre le produit disponible</div>
+                        <label class="form-check form-switch">
+                            {{ form_widget(product_form.active, {'attr': {'class': 'form-check-input', 'checked': 'true'}}) }}
+                            <span class="form-check-label">Active</span>
+                        </label>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" formnovalidate class="btn btn-primary ms-auto float-end mb-3">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                            Modifier le produit
+                        </button>
+                    </div>
+                </div>
+            {{ form_end(product_form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock pageBody %}
+
