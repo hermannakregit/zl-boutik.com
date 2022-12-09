@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,6 +24,12 @@ class ProductType extends AbstractType
                 'allow_delete' => false,
                 'download_uri' => false,
                 //'imagine_pattern' => 'squared_thumbnail',
+            ])
+            // ce champs images n'est pas mappé (lié a la base de donnée)
+            ->add('images', FileType::class, [
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false,
             ])
             ->add('active')
             ->add('slug')

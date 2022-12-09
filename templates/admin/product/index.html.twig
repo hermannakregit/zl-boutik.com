@@ -89,12 +89,21 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Image</label>
+                    <label class="form-label">Image Principale</label>
                     {% if form_errors(product_form.imageFile) %}
                         {{ form_widget(product_form.imageFile, {'attr': {'class': 'form-control is-invalid'}}) }}
                         <span class="invalid-feedback">{{ form_errors(product_form.imageFile) }}</span>
                     {% else %}
                         {{ form_widget(product_form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Image Principale</label>
+                    {% if form_errors(product_form.images) %}
+                        {{ form_widget(product_form.images, {'attr': {'class': 'form-control is-invalid'}}) }}
+                        <span class="invalid-feedback">{{ form_errors(product_form.images) }}</span>
+                    {% else %}
+                        {{ form_widget(product_form.images, {'attr': {'class': 'form-control'}}) }}
                     {% endif %}
                 </div>
                 <div class="mb-3">

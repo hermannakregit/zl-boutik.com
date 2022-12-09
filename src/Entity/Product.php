@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Traits\SlugTrait;
 use App\Traits\TimestampTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
@@ -60,6 +62,14 @@ class Product
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Type("string")]
     private ?string $reduction = null;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Image::class, cascade: ["persist"])]
+    private Collection $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -186,6 +196,36 @@ class Product
     public function setReduction(?string $reduction): self
     {
         $this->reduction = $reduction;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getProduct() === $this) {
+                $image->setProduct(null);
+            }
+        }
 
         return $this;
     }

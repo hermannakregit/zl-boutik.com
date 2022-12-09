@@ -19,13 +19,15 @@
                     <div class="card">
                         <article class="gallery-wrap"> 
                             <div class="img-big-wrap">
-                            <div> <a href="#"><img src="{{ vich_uploader_asset(product, 'imageFile') }}" class="img-fluid img-responsive"></a></div>
+                            <div> <a href="#"><img src="{{ vich_uploader_asset(product, 'imageFile') }}" class="img-fluid img-responsive" id="image_view"></a></div>
                             </div> <!-- slider-product.// -->
                             <div class="thumbs-wrap">
-                            <a href="#" class="item-thumb"> <img src="{{ vich_uploader_asset(product, 'imageFile') }}"></a>
-                            <a href="#" class="item-thumb"> <img src="{{ vich_uploader_asset(product, 'imageFile') }}"></a>
-                            <a href="#" class="item-thumb"> <img src="{{ vich_uploader_asset(product, 'imageFile') }}"></a>
-                            <a href="#" class="item-thumb"> <img src="{{ vich_uploader_asset(product, 'imageFile') }}"></a>
+
+                                <div class="item-thumb" onclick="viewThumb(`{{ vich_uploader_asset(product, 'imageFile') }}`)"> <img src="{{ vich_uploader_asset(product, 'imageFile') }}"> </div>
+                                {% for image in product.images %}
+                                    <div class="item-thumb" onclick="viewThumb(`{{ asset('/uploads/products/' ~ image.name) }}`)"> <img src="{{ asset('/uploads/products/' ~ image.name) }}"> </div>
+                                {% endfor %}
+                            
                             </div> <!-- slider-nav.// -->
                         </article> <!-- gallery-wrap .end// -->
                     </div> <!-- card.// -->
@@ -71,9 +73,6 @@
                                     <var class="price h4">{{ product.priceXof }} XOF</var> 
                                 {% endif %}
                             {% endif %}
-                            
-
-                            
                             
                         </div> <!-- price-detail-wrap .// -->
 
@@ -131,3 +130,19 @@
     
 
 {% endblock body %}
+
+{% block scripts %}
+
+    <script>
+
+        const image_view = document.getElementById('image_view');
+
+        function viewThumb(src){
+            
+            image_view.setAttribute('src', src);
+
+        }
+
+    </script>
+
+{% endblock scripts %}

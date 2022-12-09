@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Image;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
@@ -23,6 +24,27 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+            // traitement des images
+            $images = $form->get('images')->getData();
+            //on boucle sur les images
+            foreach ($images as $image) {
+               // on génère un nouveau nom de fichier
+               $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+               // on copie le fichier dans le dossier  (directory)
+               $image->move(
+                $this->getParameter('images_upload_directory'),
+                $fichier
+               );
+
+               // on stocke l'image le nom de l'image dans la base de donnée
+               $img = new Image();
+               $img->setName($fichier);
+               $product->addImage($img);
+
+            }
+
             $product = $form->getData();
 
             $em->persist($product);
@@ -56,6 +78,26 @@ class ProductController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
+            // traitement des images
+            $images = $form->get('images')->getData();
+            //on boucle sur les images
+            foreach ($images as $image) {
+               // on génère un nouveau nom de fichier
+               $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
+               // on copie le fichier dans le dossier  (directory)
+               $image->move(
+                $this->getParameter('images_upload_directory'),
+                $fichier
+               );
+
+               // on stocke l'image le nom de l'image dans la base de donnée
+               $img = new Image();
+               $img->setName($fichier);
+               $product->addImage($img);
+
+            }
+
             $product = $form->getData();
 
             $em->flush();
@@ -71,6 +113,7 @@ class ProductController extends AbstractController
         
         $context = [
             'product_form' => $form,
+            'product' => $product,
         ];
 
         return $this->renderForm('admin/product/edit.html.twig', $context);
@@ -89,5 +132,25 @@ class ProductController extends AbstractController
         
 
         return $this->redirectToRoute('app_admin_product_index');
+    }
+
+    #[Route('/admin/product/image/delete/{id}', name: 'app_admin_product_image_delete', methods: 'POST')]
+    public function deleteProductImage(Image $image, Request $request, EntityManagerInterface $em): Response
+    {
+
+        if($this->isCsrfTokenValid('product_image_deletion_'. $image->getId(), $request->request->get('csrf_token'))){
+            // on recupere le nom du fichier
+            $name = $image->getName();
+            // on supprime le fichier
+            unlink($this->getParameter('images_upload_directory'). '/' . $name);
+
+            $em->remove($image);
+            $em->flush();
+
+            $this->addFlash('success', "L'image a été suprimée avec succès");
+        }
+        
+        $id = $image->getProduct()->getId();
+        return $this->redirectToRoute('app_admin_product_edit', ['id' => $id], Response::HTTP_SEE_OTHER);
     }
 }
